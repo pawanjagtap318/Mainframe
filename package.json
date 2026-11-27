@@ -1,0 +1,20 @@
+{
+  "name": "corevista-mainframe-lab",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "description": "MERN channel with a COBOL, CICS, DB2 and JCL mainframe learning lab",
+  "scripts": {
+    "dev": "concurrently -k \"npm run dev --workspace server\" \"npm run dev --workspace client\"",
+    "build": "npm run build --workspace client",
+    "start": "npm start --workspace server",
+    "check": "npm run check --workspace server",
+    "sql": "npm run sql --workspace server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

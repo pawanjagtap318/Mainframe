@@ -1,0 +1,25 @@
+CoreVista z/OS Connect examples (run from an authenticated Zowe CLI).
+The local application does not execute these commands.
+
+1. Configure and review the target profile:
+   zowe profiles create zosmf cv-lab --host <zosmf-host> --port 443
+   zowe profiles list
+
+2. Upload source members to an allocated source PDS:
+   zowe zos-files upload dir-to-pds "mainframe/cobol" "AETHR.COBOL"
+   zowe zos-files upload dir-to-pds "mainframe/jcl" "AETHR.JCL"
+
+3. After site-specific JCL, DB2 plan, and security setup, submit:
+   zowe zos-jobs submit data-set "AETHR.JCL(EODINT)" --wait-for-output
+
+4. Run a read-only DB2 inquiry (requires Zowe DB2 plug-in and access):
+   zowe db2 execute sql --query "SELECT ACCT_NO, BALANCE FROM AETHR.ACCOUNT FETCH FIRST 10 ROWS ONLY"
+
+5. View JES jobs and output:
+   zowe zos-jobs list jobs --owner <your-user-id>
+   zowe zos-jobs view job-status-by-jobid <job-id>
+   zowe zos-jobs view spool-file-by-id <job-id> <spool-id>
+
+Before any real-system use: confirm plug-in syntax for your installed
+Zowe version, dataset names, subsystem, compiler/translator options,
+RACF permissions, DB2 package/plan binds, and change approvals.
